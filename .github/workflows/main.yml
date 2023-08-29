@@ -5,6 +5,7 @@ jobs:
   build_job:
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       packages: write
     steps:
       - uses: betadots/gha-build-and-publish-a-container@main
