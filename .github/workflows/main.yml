@@ -9,4 +9,6 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v3
-      - uses: betadots/gha-build-and-publish-a-container@v1
+      - uses: betadots/gha-build-and-publish-a-container@b68d488b60becc754e6353c3359764335d618fd3
+        with:
+          github_token: secrets.GITHUB_TOKEN
