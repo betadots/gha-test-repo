@@ -1,3 +1,3 @@
-FROM alpine:3.16
+FROM cytopia/ansible-lint:latest
 
 ADD README.md /
