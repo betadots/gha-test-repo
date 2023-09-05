@@ -1,0 +1,26 @@
+---
+on:  # yamllint disable-line rule:truthy
+  push:
+    branches:
+      - main
+  pull_request:
+
+name: ⚒️ CI
+
+jobs:
+  build_docker_image:
+    name: 'Built test Docker image'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Build Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          tags: demo/app:latest
+          push: false
+      - name: Check for local image
+        run: docker images
