@@ -24,3 +24,7 @@ jobs:
           push: false
       - name: Check for local image
         run: docker images
+      - name: Scan image
+        uses: anchore/scan-action@v3
+        with:
+          image: "demo/app:latest"
