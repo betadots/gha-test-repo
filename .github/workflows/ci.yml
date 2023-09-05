@@ -20,11 +20,17 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          tags: demo/app:latest
+          tags: 'demo/app:${{ github.sha }}'
           push: false
-      - name: Check for local image
-        run: docker images
-      - name: Scan image
-        uses: anchore/scan-action@v3
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
         with:
-          image: "ghcr.io/betadots/hdm:latest"
+          image-ref: 'demo/app:${{ github.sha }}'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
