@@ -1,3 +1,5 @@
-FROM cytopia/ansible-lint:latest
+FROM alpine:3.14
 
-ADD README.md /
+RUN apk add --no-cache mysql-client
+
+ENTRYPOINT ["mysql"]
