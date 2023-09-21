@@ -24,6 +24,12 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: demo/app
+          tags: |
+            type=ref,event=branch
+            type=ref,event=tag
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}.{{patch}}
 
       - name: Build Docker image
         uses: docker/build-push-action@v4
