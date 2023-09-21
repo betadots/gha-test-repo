@@ -1,9 +1,13 @@
 ---
-on:  # yamllint disable-line rule:truthy
+on:
   push:
+    paths-ignore:
+      - '.github/**'
     branches:
-      - main
-  pull_request:
+      - 'main'
+    tags:
+      - '*'
+  workflow_dispatch:
 
 name: ⚒️ CI
 
