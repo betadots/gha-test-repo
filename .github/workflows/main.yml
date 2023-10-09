@@ -13,4 +13,4 @@ jobs:
       contents: read
       packages: write
     steps:
-      - run: echo ${{ fromJSON(env.DAY_OF_WEEK) }}
+      - run: echo ${{ toJSON(env.DAY_OF_WEEK) }}
