@@ -4,7 +4,7 @@ on:
 name: Build 🛢️ container
 
 env:
-  DAY_OF_WEEK: "Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday"
+  DAY_OF_WEEK: "{\"Monday\": 1, \"Tuesday\": 2, \"Wednesday\": 3, \"Thursday\": 4, \"Friday\": 5, \"Saturday\": 6, \"Sunday\": 7}"
 
 jobs:
   build_job:
@@ -13,4 +13,4 @@ jobs:
       contents: read
       packages: write
     steps:
-      - run: echo ${{ toJSON(env.DAY_OF_WEEK) }}
+      - run: echo ${{ fromJSON(env.DAY_OF_WEEK) }}
