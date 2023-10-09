@@ -3,6 +3,9 @@ on:
 
 name: Build 🛢️ container
 
+env:
+  DAY_OF_WEEK: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
+
 jobs:
   build_job:
     runs-on: ubuntu-latest
@@ -10,9 +13,4 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: rwaffen/gha-build-and-publish-a-container@main
-        with:
-          github_token: ${{ secrets.github_token }}
-          build_arch: linux/amd64
-          use_manual_tags: true
-          manual_tags: puppet8
+      - run: echo ${{ fromJSON(env.DAY_OF_WEEK) }}
