@@ -4,7 +4,7 @@ on:
 name: Build 🛢️ container
 
 env:
-  DAY_OF_WEEK: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
+  DAY_OF_WEEK: "Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday"
 
 jobs:
   build_job:
