@@ -3,9 +3,6 @@ on:
 
 name: Build 🛢️ container
 
-env:
-  DAY_OF_WEEK: "{\"Monday\": 1, \"Tuesday\": 2, \"Wednesday\": 3, \"Thursday\": 4, \"Friday\": 5, \"Saturday\": 6, \"Sunday\": 7}"
-
 jobs:
   build_job:
     runs-on: ubuntu-latest
@@ -20,6 +17,10 @@ jobs:
           # registry_username: foobar           # Default: github.repository_owner
           registry_password: ${{ secrets.GITHUB_TOKEN }}
           # build_arch: linux/amd64,linux/arm64 # Default: linux/amd64
-          # build_args: 'PUPPET_VERSION=8.2.0,PUPPET_RELEASE=8'      # No default
+          build_args: 'PUPPET_VERSION=8.2.0,PUPPET_RELEASE=8'      # No default
           # buildfile: Dockerfile.something     # Default: Dockerfile
           # publish: 'false'
+
+      - name: debug GITHUB_OUTPUT
+        run: |
+          echo $GITHUB_OUTPUT
