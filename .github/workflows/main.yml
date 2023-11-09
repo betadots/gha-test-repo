@@ -4,13 +4,25 @@ on:
 name: Build 🛢️ container
 
 jobs:
+  setup-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        run: |
+          echo "::set-output name=matrix::$(cat build_versions.json | jq '. | tostring')"
+
   build_job:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
+    needs: setup-matrix
+    strategy:
+      matrix: ${{ fromJson(needs.setup-matrix.outputs.matrix) }}
     steps:
-      - name: Build and publish a container
+      - name: Build version ${{ matrix.release }} container
         uses: rwaffen/gha-build-and-publish-a-container@refactor_tagging
         with:
           # registry: docker.io                 # Default: ghcr.io
@@ -18,8 +30,8 @@ jobs:
           registry_password: ${{ secrets.GITHUB_TOKEN }}
           # build_arch: linux/amd64,linux/arm64 # Default: linux/amd64
           build_args: |
-            PUPPET_VERSION=8.2.0
-            PUPPET_RELEASE=8
+            PUPPET_VERSION=${{ matrix.release }}
+            PUPPET_RELEASE=${{ matrix.version }}
           # buildfile: Dockerfile.something     # Default: Dockerfile
           # publish: 'false'                    # Default: true
           # tags: |

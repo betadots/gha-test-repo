@@ -1,8 +1,12 @@
 {
-  "release7": [
-    "7.13.0"
-  ],
-  "release8": [
-    "8.2.3"
+  "include": [
+    {
+      "release": 7,
+      "version": "7.13.0"
+    },
+    {
+      "release": 8,
+      "version": "8.2.1"
+    }
   ]
 }
