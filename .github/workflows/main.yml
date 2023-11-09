@@ -38,4 +38,4 @@ jobs:
           # publish: 'false'                    # Default: true
           tags: |
             ghcr.io/${{ github.repository }}:${{ github.ref_name }}-${{ matrix.release }}
-            ghcr.io/betadots/gha-test-repo:latest
+            ghcr.io/${{ github.repository }}:latest
