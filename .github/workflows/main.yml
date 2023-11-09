@@ -9,6 +9,9 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
+      - name: Source checkout
+        uses: actions/checkout@v4
+
       - id: set-matrix
         # run: echo "::set-output name=matrix::$(cat build_versions.json | jq '. | tostring')"
         run: echo "matrix=$(cat build_versions.json | jq '. | tostring')" >> $GITHUB_OUTPUT
