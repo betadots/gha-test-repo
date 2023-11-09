@@ -10,11 +10,8 @@ jobs:
       contents: read
       packages: write
     steps:
-      - run: echo "RLS_JSON=$(jq -c . < build_versions.json)" >> $GITHUB_ENV
-      - run: echo '${{ fromJson(env.RLS_JSON).version }}'
-
       - name: Build and publish a container
-        uses: rwaffen/gha-build-and-publish-a-container@main
+        uses: rwaffen/gha-build-and-publish-a-container@fix_docker_login
         with:
           # registry: docker.io                 # Default: ghcr.io
           # registry_username: foobar           # Default: github.repository_owner
