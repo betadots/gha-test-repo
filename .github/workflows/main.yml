@@ -11,7 +11,7 @@ jobs:
       packages: write
     steps:
       - name: Build and publish a container
-        uses: rwaffen/gha-build-and-publish-a-container@fix_docker_login
+        uses: rwaffen/gha-build-and-publish-a-container@refactor_tagging
         with:
           # registry: docker.io                 # Default: ghcr.io
           # registry_username: foobar           # Default: github.repository_owner
