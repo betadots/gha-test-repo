@@ -22,3 +22,6 @@ jobs:
             PUPPET_RELEASE=8
           # buildfile: Dockerfile.something     # Default: Dockerfile
           # publish: 'false'                    # Default: true
+          tags: |
+            ghcr.io/betadots/gha-test-repo:devlopment
+            ghcr.io/betadots/gha-test-repo:latest
