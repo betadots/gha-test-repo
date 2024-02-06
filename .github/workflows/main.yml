@@ -23,15 +23,3 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository }}:${{ steps.split.outputs.tag }}
             ghcr.io/${{ github.repository }}:latest
-
-      - name: 'Get Previous tag'
-        id: previoustag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1"
-
-      - name: Make release
-        run: |
-          bundle install
-          mkdir -p build
-          github_changelog_generator --since-tag ${{ steps.previoustag.outputs.tag }} --output build/changelog.md
-          gh release create ${{ github.ref_name }} --notes-file build/changelog.md --title "Release ${{ github.ref_name }}"
-        if: startsWith(github.ref, 'refs/tags/')
