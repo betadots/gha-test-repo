@@ -4,17 +4,18 @@ on:
     tags:
       - '*'
 
-name: Build 🛢️ container
+name: Release 🚀
 
 jobs:
   release:
-    name: Release 🚀
+    name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+
       - name: 'Get Previous tag'
         id: previoustag
         uses: "WyriHaximus/github-action-get-previous-tag@v1"
