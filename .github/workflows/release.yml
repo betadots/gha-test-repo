@@ -20,7 +20,7 @@ jobs:
 
       - name: 'Get Previous tag'
         id: previoustag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        uses: younited/get-previous-tag-action@v1.0.0
 
       - name: Make release
         env:
@@ -32,6 +32,6 @@ jobs:
           bundle exec github_changelog_generator \
             --user ${{ github.repository_owner }} \
             --project "gha-test-repo" \
-            --since-tag ${{ steps.previoustag.outputs.tag }} \
+            --since-tag ${{ steps.previoustag.outputs.previous-tag }} \
             --output build/changelog.md
           gh release create ${{ github.ref_name }} --notes-file build/changelog.md --title "Release ${{ github.ref_name }}"
