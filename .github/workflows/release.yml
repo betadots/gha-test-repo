@@ -24,13 +24,17 @@ jobs:
           bundle install
           mkdir -p build
 
-      - uses: younited/get-previous-tag-action@v1.0.0
+      - name: Get previous Tag
         id: get-previous-tag
+        run: |
+          EXCLUDES=$(git describe --abbrev=0 --tags)
+          PTAG=$(git describe --abbrev=0 --tags --exclude="${EXCLUDES}")
+          echo "previous_tag=${PTAG}" >> "$GITHUB_OUTPUT"
 
       - name: Generate Changelog
         env:
           GH_TOKEN: ${{ github.token }}
-        run: bundle exec github_changelog_generator --user ${{ github.repository_owner }} --project "gha-test-repo" --since-tag ${{ steps.get-previous-tag.outputs.previous-tag }} --future-release ${{ github.ref_name }} --output build/changelog.md
+        run: bundle exec github_changelog_generator --user ${{ github.repository_owner }} --project "gha-test-repo" --since-tag ${{ steps.get-previous-tag.outputs.previous_tag }} --future-release ${{ github.ref_name }} --output build/changelog.md
 
       - name: Create Release
         env:
