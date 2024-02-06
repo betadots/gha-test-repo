@@ -30,6 +30,7 @@ jobs:
 
       - name: Make release
         run: |
+          bundle install
           mkdir -p build
           github_changelog_generator --since-tag ${{ steps.previoustag.outputs.tag }} --output build/changelog.md
           gh release create ${{ github.ref_name }} --notes-file build/changelog.md --title "Release ${{ github.ref_name }}"
