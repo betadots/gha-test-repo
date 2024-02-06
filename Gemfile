@@ -2,4 +2,6 @@
 
 source 'https://rubygems.org'
 
-gem 'github-changelog-generator', require: false
+group :release do
+  gem 'github_changelog_generator', '>= 1.16.1', require: false
+end

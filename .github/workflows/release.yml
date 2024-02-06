@@ -24,6 +24,7 @@ jobs:
 
       - name: Make release
         run: |
+          bundle config set --local with 'release'
           bundle install
           mkdir -p build
           github_changelog_generator --since-tag ${{ steps.previoustag.outputs.tag }} --output build/changelog.md
