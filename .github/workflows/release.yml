@@ -31,8 +31,7 @@ jobs:
           PTAG=$(git --no-pager tag --list | sort --version-sort | tail -n2 | head -n1)
           bundle exec github_changelog_generator --user ${{ github.repository_owner }} --project "gha-test-repo" --since-tag ${PTAG} --output build/changelog.md
 
-      - name: Show changelog
-        run: cat build/changelog.md
-
-      - name: Release
+      - name: Create Release
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: gh release create ${{ github.ref_name }} --notes-file build/changelog.md --title "Release ${{ github.ref_name }}"
