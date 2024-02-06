@@ -19,8 +19,6 @@ jobs:
           bundler-cache: true
 
       - name: Prep environment
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           bundle config set --local with 'release'
           bundle install
@@ -28,7 +26,10 @@ jobs:
           PTAG=$(git --no-pager tag --list | sort --version-sort | tail -n2 | head -n1)
 
       - name: Gen changelog
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: bundle exec github_changelog_generator --user ${{ github.repository_owner }} --project "gha-test-repo" --since-tag ${PTAG} --output build/changelog.md
+
       - name: Show changelog
         run: cat build/changelog.md
 
