@@ -28,7 +28,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          PTAG=$(git --no-pager tag --list | sort --version-sort | tail -n2 | head -n1)
+          PTAG=$(git describe --abbrev=0 --tags --exclude="$(git describe --abbrev=0 --tags)")
           bundle exec github_changelog_generator --user ${{ github.repository_owner }} --project "gha-test-repo" --since-tag ${PTAG} --future-release ${{ github.ref_name }} --output build/changelog.md
 
       - name: Create Release
