@@ -18,18 +18,19 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Prep environment
+      - name: Prep Environment
         run: |
           bundle config set --local with 'release'
           bundle install
           mkdir -p build
 
-      - name: Gen changelog
+      - uses: younited/get-previous-tag-action@v1.0.0
+        id: get-previous-tag
+
+      - name: Generate Changelog
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          PTAG=$(git describe --abbrev=0 --tags --exclude="$(git describe --abbrev=0 --tags)")
-          bundle exec github_changelog_generator --user ${{ github.repository_owner }} --project "gha-test-repo" --since-tag ${PTAG} --future-release ${{ github.ref_name }} --output build/changelog.md
+        run: bundle exec github_changelog_generator --user ${{ github.repository_owner }} --project "gha-test-repo" --since-tag ${{ steps.get-previous-tag.outputs.previous-tag }} --future-release ${{ github.ref_name }} --output build/changelog.md
 
       - name: Create Release
         env:
