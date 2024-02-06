@@ -1,12 +1,11 @@
 ---
 on:
   push:
-    paths-ignore:
-      - '.github/**'
     branches:
       - 'main'
-    tags:
-      - '*'
+  pull_request:
+    branches:
+      - 'main'
   workflow_dispatch:
 
 name: ⚒️ CI
