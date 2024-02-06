@@ -35,7 +35,7 @@ jobs:
 
       - name: Generate Changelog
         env:
-          GH_TOKEN: ${{ github.token }}
+          CHANGELOG_GITHUB_TOKEN: ${{ github.token }}
         run: bundle exec github_changelog_generator --user ${{ github.repository_owner }} --project "gha-test-repo" --since-tag ${{ steps.get-previous-tag.outputs.previous_tag }} --future-release ${{ github.ref_name }} --output build/changelog.md
 
       - name: Create Release
