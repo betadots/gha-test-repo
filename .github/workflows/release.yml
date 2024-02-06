@@ -18,7 +18,7 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Make release
+      - name: Prep environment
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -26,11 +26,15 @@ jobs:
           bundle install
           mkdir -p build
           PTAG=$(git --no-pager tag --list | sort --version-sort | tail -n2 | head -n1)
-          echo $PTAG
-          bundle exec github_changelog_generator \
+
+      - name: Gen changelog
+        run: bundle exec github_changelog_generator \
             --user ${{ github.repository_owner }} \
             --project "gha-test-repo" \
             --since-tag ${PTAG} \
             --output build/changelog.md
-          cat build/changelog.md
-          gh release create ${{ github.ref_name }} --notes-file build/changelog.md --title "Release ${{ github.ref_name }}"
+      - name: Show changelog
+        run: cat build/changelog.md
+
+      - name: Release
+        run: gh release create ${{ github.ref_name }} --notes-file build/changelog.md --title "Release ${{ github.ref_name }}"
