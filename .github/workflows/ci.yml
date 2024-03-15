@@ -21,7 +21,8 @@ jobs:
         with:
           registry_password: ${{ secrets.GITHUB_TOKEN }}
           publish: 'false'
-          tags: ci/dummy:${{ github.sha }}
+          tags: |
+            ci/dummy:${{ github.sha }}
 
       - name: check-images
         run: docker images
