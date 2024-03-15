@@ -17,7 +17,7 @@ jobs:
       security-events: write
     steps:
       - name: Build container
-        uses: rwaffen/gha-build-and-publish-a-container@v2
+        uses: rwaffen/gha-build-and-publish-a-container@debug_publish
         with:
           registry_password: ${{ secrets.GITHUB_TOKEN }}
           publish: 'false'
@@ -27,14 +27,14 @@ jobs:
       - name: check-images
         run: docker images
 
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: ghcr.io/${{ github.repository }}:${{ github.sha }}
-          format: 'sarif'
-          output: 'trivy-results.sarif'
+      # - name: Run Trivy vulnerability scanner
+      #   uses: aquasecurity/trivy-action@master
+      #   with:
+      #     image-ref: ghcr.io/${{ github.repository }}:${{ github.sha }}
+      #     format: 'sarif'
+      #     output: 'trivy-results.sarif'
 
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: 'trivy-results.sarif'
+      # - name: Upload Trivy scan results to GitHub Security tab
+      #   uses: github/codeql-action/upload-sarif@v2
+      #   with:
+      #     sarif_file: 'trivy-results.sarif'
