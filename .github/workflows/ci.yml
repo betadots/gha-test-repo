@@ -23,6 +23,7 @@ jobs:
         uses: rwaffen/gha-build-and-publish-a-container@v2
         with:
           registry_password: ${{ secrets.GITHUB_TOKEN }}
+          publish: 'false'
           tags: |
             ghcr.io/${{ github.repository }}:${{ github.sha }}
 
