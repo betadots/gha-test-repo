@@ -24,8 +24,10 @@ jobs:
         with:
           registry_password: ${{ secrets.GITHUB_TOKEN }}
           publish: 'false'
-          tags: |
-            ghcr.io/${{ github.repository }}:${{ github.sha }}
+          tags: ci/dummy:${{ github.sha }}
+
+      - name: check-images
+        run: docker images
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
