@@ -1,4 +1,4 @@
-FROM alpine:3.19
+FROM voxpupuli/voxpupuli/voxbox:latest
 
 ARG PUPPET_RELEASE
 ENV PUPPET_RELEASE=${PUPPET_RELEASE:-7}
