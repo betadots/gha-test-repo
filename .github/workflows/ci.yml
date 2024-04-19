@@ -42,18 +42,19 @@ jobs:
         with:
           push: false
           tags: |
-            ci/dummy:${{ github.sha }}
+            ci/dummy-${{ matrix.release }}:${{ github.sha }}
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ci/dummy:${{ github.sha }}
+          image-ref: ci/dummy-${{ matrix.release }}:${{ github.sha }}
           format: 'sarif'
           output: 'trivy-results-${{ matrix.release }}.sarif'
           severity: 'CRITICAL,HIGH'
+          limit-severities-for-sarif: true
 
       - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: 'trivy-results-${{ matrix.release }}.sarif'
 
