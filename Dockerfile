@@ -1,4 +1,4 @@
-FROM voxpupuli/voxpupuli/voxbox:latest
+FROM ghcr.io/voxpupuli/voxbox:latest
 
 ARG PUPPET_RELEASE
 ENV PUPPET_RELEASE=${PUPPET_RELEASE:-7}
