@@ -24,17 +24,22 @@ jobs:
           tags: |
             ci/dummy:${{ github.sha }}
 
-      - name: check-images
-        run: docker images
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ci/dummy:${{ github.sha }}
+          format: 'sarif'
+          output: 'trivy-results.sarif'
 
-      # - name: Run Trivy vulnerability scanner
-      #   uses: aquasecurity/trivy-action@master
-      #   with:
-      #     image-ref: ghcr.io/${{ github.repository }}:${{ github.sha }}
-      #     format: 'sarif'
-      #     output: 'trivy-results.sarif'
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
 
-      # - name: Upload Trivy scan results to GitHub Security tab
-      #   uses: github/codeql-action/upload-sarif@v2
-      #   with:
-      #     sarif_file: 'trivy-results.sarif'
+  tests:
+    needs:
+      - build_docker_image
+    runs-on: ubuntu-latest
+    name: Test suite
+    steps:
+      - run: echo Test suite completed
