@@ -24,11 +24,35 @@ jobs:
       - name: Sync .github directory
         run: |
           rsync -avz upstream/sync/ .github/
-          if [[ $? -eq 0 ]]; then
-            rm -rf upstream
+          rm -rf upstream
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet; then
+            echo "HAS_CHANGES=false" >> $GITHUB_OUTPUT
+          else
+            echo "HAS_CHANGES=true" >> $GITHUB_OUTPUT
           fi
 
       - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "Sync from org-.github repository"
+        if: steps.changes.outputs.HAS_CHANGES == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git switch -c sync-config
+          git add .
+          git commit -m "Sync from config repository"
+          git push origin HEAD
+
+      - name: Create Pull Request
+        if: steps.changes.outputs.HAS_CHANGES == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            /repos/${{ github.repository }}/pulls \
+            -d '{"title":"Sync from config repository","body":"This pull request contains changes synced from the global config repo.","head":"sync-config","base":"main"}'
