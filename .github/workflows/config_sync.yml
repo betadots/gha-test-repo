@@ -50,4 +50,9 @@ jobs:
         if: steps.changes.outputs.has_changes == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh pr create --title "Sync from config repository" --base main --head sync-config
+        run: |
+          gh pr create \
+            --title "Sync from config repository" \
+            --body "This PR was automatically created to sync the .github directory." \
+            --base main \
+            --head sync-config
