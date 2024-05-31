@@ -1,5 +1,10 @@
 ---
+name: ⚒️ Config Sync
+
 on:
+  push:
+    branches:
+      - main
   schedule:
     - cron: '* * * * *'
 
