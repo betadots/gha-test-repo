@@ -29,6 +29,7 @@ jobs:
       - name: Check for changes
         id: changes
         run: |
+          git status
           if git diff --quiet; then
             echo "HAS_CHANGES=false" >> $GITHUB_OUTPUT
           else
