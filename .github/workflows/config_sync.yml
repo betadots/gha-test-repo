@@ -17,7 +17,7 @@ jobs:
         uses: kbrashears5/github-action-file-sync@v2.0.0
         with:
           REPOSITORIES: |
-            "${{ github.repository_owner }}/.github@main"
+            ${{ github.repository_owner }}/.github@main
           FILES: |
             .github/release.yml=.github/release.yml
-          TOKEN: ${{ secrets.ACTIONS }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
