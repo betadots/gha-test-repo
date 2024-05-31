@@ -15,8 +15,17 @@ jobs:
       - name: Git checkout
         uses: actions/checkout@v3
 
-      - name: File Sync
-        uses: netlify/file-sync-action@v1
+      - name: Checkout Config-Repository
+        uses: actions/checkout@v4
         with:
-          files: '{"betadots/.github#sync/release.yml": ".github/release.yml"}'
-          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: "${{ github.repository_owner }}/.github"
+          path: upstream
+
+      - name: Install rsync
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y rsync
+
+      - name: Sync .github directory
+        run: |
+          rsync -avz upstream/sync/ .github/
