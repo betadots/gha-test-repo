@@ -18,7 +18,7 @@ jobs:
 
       - name: Checkout profile
         uses: actions/checkout@v4
-        if: ${{ hashFiles('.github/release.yml') != '' }}
+        if: ${{ hashFiles('release.yml') != '' }}
         with:
           repository: "${{ github.repository_owner }}/.github"
           sparse-checkout: release.yml
