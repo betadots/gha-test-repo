@@ -21,7 +21,7 @@ jobs:
         if: ${{ hashFiles('.github/release.yml') != '' }}
         with:
           repository: "${{ github.repository_owner }}/.github"
-          sparse-checkout: .github/release.yml
+          sparse-checkout: release.yml
           sparse-checkout-cone-mode: false
 
       - name: Create Release Page
