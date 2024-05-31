@@ -28,15 +28,11 @@ jobs:
         if: steps.check_file.outputs.RELEASE_YML_MISSING == 'true'
         with:
           repository: "${{ github.repository_owner }}/.github"
-          path: upstream
-          sparse-checkout: config/release.yml
+          sparse-checkout: .github/release.yml
           sparse-checkout-cone-mode: false
 
-      - name: Kopiere release.yml (falls vorhanden)
-        if: steps.check_file.outputs.RELEASE_YML_MISSING == 'true'
-        run: |
-          cp upstream/config/release.yml .github/release.yml
-
+      - name: list files
+        run: find .
 
       - name: Create Release Page
         shell: bash
