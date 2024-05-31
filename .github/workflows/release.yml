@@ -16,13 +16,27 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Checkout profile
+      - name: Prüfe, ob release.yml existiert
+        id: check_file
+        run: |
+          if [ ! -f .github/release.yml ]; then
+            echo "RELEASE_YML_MISSING=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Checkout Upstream-Repository (falls release.yml fehlt)
         uses: actions/checkout@v4
-        if: ${{ hashFiles('release.yml') != '' }}
+        if: steps.check_file.outputs.RELEASE_YML_MISSING == 'true'
         with:
           repository: "${{ github.repository_owner }}/.github"
-          sparse-checkout: release.yml
+          path: upstream
+          sparse-checkout: config/release.yml
           sparse-checkout-cone-mode: false
+
+      - name: Kopiere release.yml (falls vorhanden)
+        if: steps.check_file.outputs.RELEASE_YML_MISSING == 'true'
+        run: |
+          cp upstream/config/release.yml .github/release.yml
+
 
       - name: Create Release Page
         shell: bash
