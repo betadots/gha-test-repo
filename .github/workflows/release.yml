@@ -11,5 +11,21 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
-      - name: Create GitHub release
-        uses: voxpupuli/gha-create-a-github-release@main
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Checkout profile
+        uses: actions/checkout@v4
+        if: ${{ hashFiles('.github/release.yml') != '' }}
+        with:
+          repository: "${{ github.repository_owner }}/.github"
+          sparse-checkout: .github/release.yml
+          sparse-checkout-cone-mode: false
+
+      - name: Create Release Page
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create ${{ github.ref_name }} --generate-notes
