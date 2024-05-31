@@ -21,14 +21,12 @@ jobs:
           repository: "${{ github.repository_owner }}/.github"
           path: upstream
 
-      - name: Install rsync
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y rsync
-
       - name: Sync .github directory
         run: |
           rsync -avz upstream/sync/ .github/
+          if [[ $? -eq 0 ]]; then
+            rm -rf upstream
+          fi
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
