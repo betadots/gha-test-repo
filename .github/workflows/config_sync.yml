@@ -49,10 +49,4 @@ jobs:
         if: steps.changes.outputs.has_changes == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh api \
-            -X POST \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer $GITHUB_TOKEN" \
-            /repos/${{ github.repository }}/pulls \
-            -d '{"title":"Sync from config repository","body":"This pull request contains changes synced from the global config repo.","head":"sync-config","base":"main"}'
+        run: gh pr create --title "Sync from config repository" --base main --head sync-config
