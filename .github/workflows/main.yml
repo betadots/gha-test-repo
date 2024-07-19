@@ -19,7 +19,7 @@ jobs:
         run: echo "tag=${TAG:1}" >> $GITHUB_OUTPUT
 
       - name: Build container
-        uses: rwaffen/gha-build-and-publish-a-container@debug_publish
+        uses: rwaffen/gha-build-and-publish-a-container@attest
         with:
           registry_password: ${{ secrets.GITHUB_TOKEN }}
           tags: |
