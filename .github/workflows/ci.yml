@@ -32,7 +32,9 @@ jobs:
       security-events: write
     needs: setup-matrix
     strategy:
-      matrix: ${{ fromJson(needs.setup-matrix.outputs.matrix) }}
+      matrix:
+        version: ${{ fromJson(needs.setup-matrix.outputs.matrix.version) }}
+        release: ${{ fromJson(needs.setup-matrix.outputs.matrix.release) }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
