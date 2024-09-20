@@ -27,5 +27,3 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository }}:${{ steps.split.outputs.tag }}
             ghcr.io/${{ github.repository }}:latest
-          sbom: 'true'
-          provenance: 'true'
