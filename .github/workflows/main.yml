@@ -24,7 +24,6 @@ jobs:
         uses: rwaffen/gha-build-and-publish-a-container@sbom
         with:
           registry_password: ${{ secrets.GITHUB_TOKEN }}
-          attest: 'true'
           tags: |
             ghcr.io/${{ github.repository }}:${{ steps.split.outputs.tag }}
             ghcr.io/${{ github.repository }}:latest
